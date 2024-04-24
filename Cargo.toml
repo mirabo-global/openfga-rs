@@ -1,5 +1,5 @@
 [package]
-name = "openapi"
+name = "openfga_rs"
 version = "0.1.0"
 authors = ["community@openfga.dev"]
 description = "A high performance and flexible authorization/permission engine built for developers and inspired by Google Zanzibar."
