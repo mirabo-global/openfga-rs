@@ -201,3 +201,159 @@ impl ConfigurationBuilder {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::apis::{Error, ResponseContent, urlencode};
+
+    // ── GROUP A: ConfigurationBuilder ──────────────────────────────────────────
+
+    #[test]
+    fn builder_default_base_path_is_localhost() {
+        let config = Configuration::builder().build();
+        assert_eq!(config.base_path, "http://localhost");
+    }
+
+    #[test]
+    fn builder_bearer_token_sets_bearer_auth() {
+        let config = Configuration::builder().bearer_token("my-token").build();
+        assert!(
+            matches!(&config.auth, Some(AuthMethod::Bearer(t)) if t == "my-token"),
+            "expected Bearer(\"my-token\"), got {:?}",
+            config.auth
+        );
+    }
+
+    #[test]
+    fn builder_oauth_token_sets_oauth_auth() {
+        let config = Configuration::builder().oauth_token("oauth-tok").build();
+        assert!(
+            matches!(&config.auth, Some(AuthMethod::OAuth(t)) if t == "oauth-tok"),
+            "expected OAuth(\"oauth-tok\"), got {:?}",
+            config.auth
+        );
+    }
+
+    #[test]
+    fn builder_basic_auth_has_named_fields() {
+        let config = Configuration::builder()
+            .basic_auth("user", Some("pass"))
+            .build();
+        match &config.auth {
+            Some(AuthMethod::Basic(creds)) => {
+                // Access by field name, not tuple index — proves AP-2 fix
+                assert_eq!(creds.username, "user");
+                assert_eq!(creds.password.as_deref(), Some("pass"));
+            }
+            other => panic!("expected Basic auth, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn builder_api_key_with_prefix() {
+        let config = Configuration::builder()
+            .api_key("my-key", Some("Token"))
+            .build();
+        match &config.auth {
+            Some(AuthMethod::ApiKey { prefix, key }) => {
+                assert_eq!(key, "my-key");
+                assert_eq!(prefix.as_deref(), Some("Token"));
+            }
+            other => panic!("expected ApiKey auth, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn builder_last_auth_setter_wins() {
+        let config = Configuration::builder()
+            .bearer_token("first")
+            .oauth_token("second")
+            .build();
+        // Last setter (oauth_token) must win — no hidden priority list
+        assert!(
+            matches!(&config.auth, Some(AuthMethod::OAuth(t)) if t == "second"),
+            "expected OAuth(\"second\") to win, got {:?}",
+            config.auth
+        );
+    }
+
+    #[test]
+    fn builder_custom_base_path_is_preserved() {
+        let config = Configuration::builder()
+            .base_path("https://prod.example.com")
+            .build();
+        assert_eq!(config.base_path, "https://prod.example.com");
+    }
+
+    // ── GROUP B: Error Display ─────────────────────────────────────────────────
+
+    #[test]
+    fn error_display_response_error_with_entity_includes_entity_details() {
+        let rc: ResponseContent<String> = ResponseContent {
+            status: reqwest::StatusCode::BAD_REQUEST,
+            content: String::from("raw body"),
+            entity: Some(String::from("detail string")),
+        };
+        let err: Error<String> = Error::ResponseError(rc);
+        let display = format!("{err}");
+        assert!(
+            display.contains("status code"),
+            "display should contain 'status code', got: {display}"
+        );
+        // entity debug repr should appear
+        assert!(
+            display.contains("detail string"),
+            "display should contain entity details, got: {display}"
+        );
+    }
+
+    #[test]
+    fn error_display_response_error_without_entity_shows_status_only() {
+        let rc: ResponseContent<String> = ResponseContent {
+            status: reqwest::StatusCode::BAD_REQUEST,
+            content: String::from("raw body"),
+            entity: None,
+        };
+        let err: Error<String> = Error::ResponseError(rc);
+        let display = format!("{err}");
+        assert!(
+            display.contains("status code 400"),
+            "display should contain 'status code 400', got: {display}"
+        );
+    }
+
+    #[test]
+    fn error_display_serde_error_shows_serde_module() {
+        let serde_err = serde_json::from_str::<i32>("not-a-number").unwrap_err();
+        let err: Error<String> = Error::Serde(serde_err);
+        let display = format!("{err}");
+        assert!(
+            display.starts_with("error in serde:"),
+            "display should start with 'error in serde:', got: {display}"
+        );
+    }
+
+    // ── GROUP C: urlencode ─────────────────────────────────────────────────────
+
+    #[test]
+    fn urlencode_encodes_slashes_and_spaces() {
+        let encoded = urlencode("store/id with space");
+        // url::form_urlencoded encodes '/' as %2F and space as '+'
+        assert!(
+            encoded.contains("%2F"),
+            "slash should be percent-encoded, got: {encoded}"
+        );
+        // space is encoded as '+' by form_urlencoded
+        assert!(
+            encoded.contains('+') || encoded.contains("%20"),
+            "space should be encoded, got: {encoded}"
+        );
+    }
+
+    #[test]
+    fn urlencode_empty_string_returns_empty() {
+        let encoded = urlencode("");
+        assert_eq!(encoded, "", "empty string should encode to empty string");
+    }
+}
