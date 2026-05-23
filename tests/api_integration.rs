@@ -3987,7 +3987,7 @@ async fn read_changes_with_start_time_encodes_query_param() {
     use chrono::DateTime;
     let mut server = Server::new_async().await;
     let start_time = DateTime::parse_from_rfc3339("2024-01-01T00:00:00+00:00").unwrap();
-    let expected_value = start_time.to_string();
+    let expected_value = start_time.to_rfc3339();
     let mock = server
         .mock("GET", "/stores/s1/changes")
         .match_query(Matcher::UrlEncoded("start_time".into(), expected_value))
