@@ -72,9 +72,19 @@ pub fn urlencode<T: AsRef<str>>(s: T) -> String {
     use percent_encoding::{AsciiSet, CONTROLS, utf8_percent_encode};
     /// Characters that must be percent-encoded in a URL path segment.
     const PATH_SEGMENT: &AsciiSet = &CONTROLS
-        .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`')
-        .add(b'#').add(b'?').add(b'{').add(b'}')
-        .add(b'/').add(b'%').add(b'@').add(b':');
+        .add(b' ')
+        .add(b'"')
+        .add(b'<')
+        .add(b'>')
+        .add(b'`')
+        .add(b'#')
+        .add(b'?')
+        .add(b'{')
+        .add(b'}')
+        .add(b'/')
+        .add(b'%')
+        .add(b'@')
+        .add(b':');
     utf8_percent_encode(s.as_ref(), PATH_SEGMENT).to_string()
 }
 

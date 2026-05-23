@@ -233,9 +233,7 @@ pub async fn streamed_list_objects(
     // `result` (success) or an `error` (server-side stream failure) field set.
     // Lines are read incrementally from the byte stream without buffering the
     // entire response body.
-    let byte_stream = resp
-        .bytes_stream()
-        .map_err(std::io::Error::other);
+    let byte_stream = resp.bytes_stream().map_err(std::io::Error::other);
     let reader = StreamReader::new(byte_stream);
     let mut lines = reader.lines();
 
@@ -253,7 +251,9 @@ pub async fn streamed_list_objects(
                 status: reqwest::StatusCode::INTERNAL_SERVER_ERROR,
                 content: format!(
                     "stream error {}: {}",
-                    err.code.map(|c| c.to_string()).unwrap_or_else(|| "unknown".to_string()),
+                    err.code
+                        .map(|c| c.to_string())
+                        .unwrap_or_else(|| "unknown".to_string()),
                     err.message.unwrap_or_default()
                 ),
                 entity: None,
