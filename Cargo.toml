@@ -1,18 +1,23 @@
 [package]
-name = "openfga_rs"
+name = "openfga"
 version = "0.1.1"
-authors = ["community@openfga.dev"]
-description = "A high performance and flexible authorization/permission engine built for developers and inspired by Google Zanzibar."
-license = "Apache-2.0"
-edition = "2018"
+edition = "2024"
+authors = ["tuanla@mirabo-global.com"]
+description = "Rust SDK for OpenFGA — the open-source authorization system"
+license = "MIT"
+repository = "https://github.com/mirabo-global/openfga-rs"
+keywords = ["openfga", "authorization", "authz", "zanzibar", "fga"]
+categories = ["authentication", "api-bindings", "network-programming"]
 
 [dependencies]
-serde = "^1.0"
-serde_derive = "^1.0"
+serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1.0"
-url = "^2.2"
-uuid = { version = "^1.0", features = ["serde", "v4"] }
-[dependencies.reqwest]
-version = "^0.12"
-features = ["json", "multipart", "rustls-tls"]
-default-features = false
+serde_repr = "^0.1"
+url = "^2.5"
+chrono = { version = "^0.4", features = ["serde"] }
+reqwest = { version = "^0.13", default-features = false, features = ["json", "multipart", "query", "form"] }
+
+[features]
+default = ["native-tls"]
+native-tls = ["reqwest/native-tls"]
+rustls = ["reqwest/rustls"]
