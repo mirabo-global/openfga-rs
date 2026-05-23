@@ -1,6 +1,6 @@
 [package]
 name = "openfga"
-version = "0.1.1"
+version = "1.0.0"
 edition = "2024"
 authors = ["tuanla@mirabo-global.com"]
 description = "Rust SDK for OpenFGA — the open-source authorization system"
