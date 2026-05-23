@@ -196,7 +196,7 @@ impl ConfigurationBuilder {
         Configuration {
             base_path: self.base_path,
             user_agent: self.user_agent,
-            client: self.client.unwrap_or_else(reqwest::Client::new),
+            client: self.client.unwrap_or_default(),
             auth: self.auth,
         }
     }
