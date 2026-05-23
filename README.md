@@ -12,17 +12,17 @@ Generated from the [OpenFGA OpenAPI spec v1.x](https://raw.githubusercontent.com
 
 ```toml
 [dependencies]
-openfga = "1.0.0"
+openfga = "1.0.1"
 ```
 
 TLS backend (choose one, `native-tls` is the default):
 
 ```toml
 # Use the platform's native TLS (default)
-openfga = "1.0.0"
+openfga = "1.0.1"
 
 # Use rustls instead
-openfga = { version = "1.0.0", default-features = false, features = ["rustls"] }
+openfga = { version = "1.0.1", default-features = false, features = ["rustls"] }
 ```
 
 ## Quick start
