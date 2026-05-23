@@ -21,9 +21,6 @@ pub struct Tuple {
 
 impl Tuple {
     pub fn new(key: models::TupleKey, timestamp: chrono::DateTime<chrono::FixedOffset>) -> Tuple {
-        Tuple {
-            key,
-            timestamp,
-        }
+        Tuple { key, timestamp }
     }
 }

@@ -107,7 +107,9 @@ pub async fn action_search(
         configuration.base_path,
         store_id = crate::apis::urlencode(store_id)
     );
-    let req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+    let req_builder = configuration
+        .client
+        .request(reqwest::Method::POST, &uri_str);
     let req_builder = set_user_agent(req_builder, &configuration.user_agent);
     let req_builder = apply_auth(req_builder, configuration);
     let req_builder = req_builder.json(&body);
@@ -126,7 +128,9 @@ pub async fn evaluation(
         configuration.base_path,
         store_id = crate::apis::urlencode(store_id)
     );
-    let req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+    let req_builder = configuration
+        .client
+        .request(reqwest::Method::POST, &uri_str);
     let req_builder = set_user_agent(req_builder, &configuration.user_agent);
     let req_builder = apply_auth(req_builder, configuration);
     let req_builder = req_builder.json(&body);
@@ -145,7 +149,9 @@ pub async fn evaluations(
         configuration.base_path,
         store_id = crate::apis::urlencode(store_id)
     );
-    let req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+    let req_builder = configuration
+        .client
+        .request(reqwest::Method::POST, &uri_str);
     let req_builder = set_user_agent(req_builder, &configuration.user_agent);
     let req_builder = apply_auth(req_builder, configuration);
     let req_builder = req_builder.json(&body);
@@ -181,7 +187,9 @@ pub async fn resource_search(
         configuration.base_path,
         store_id = crate::apis::urlencode(store_id)
     );
-    let req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+    let req_builder = configuration
+        .client
+        .request(reqwest::Method::POST, &uri_str);
     let req_builder = set_user_agent(req_builder, &configuration.user_agent);
     let req_builder = apply_auth(req_builder, configuration);
     let req_builder = req_builder.json(&body);
@@ -200,7 +208,9 @@ pub async fn subject_search(
         configuration.base_path,
         store_id = crate::apis::urlencode(store_id)
     );
-    let req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+    let req_builder = configuration
+        .client
+        .request(reqwest::Method::POST, &uri_str);
     let req_builder = set_user_agent(req_builder, &configuration.user_agent);
     let req_builder = apply_auth(req_builder, configuration);
     let req_builder = req_builder.json(&body);
