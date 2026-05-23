@@ -27,4 +27,3 @@ impl V1Difference {
         }
     }
 }
-

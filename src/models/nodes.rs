@@ -19,9 +19,6 @@ pub struct Nodes {
 
 impl Nodes {
     pub fn new(nodes: Vec<models::Node>) -> Nodes {
-        Nodes {
-            nodes,
-        }
+        Nodes { nodes }
     }
 }
-

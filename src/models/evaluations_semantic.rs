@@ -13,15 +13,17 @@ use serde::{Deserialize, Serialize};
 
 /// EvaluationsSemantic : - execute_all: Execute all evaluations (default behavior)  - deny_on_first_deny: Stop on first deny decision  - permit_on_first_permit: Stop on first permit decision
 /// - execute_all: Execute all evaluations (default behavior)  - deny_on_first_deny: Stop on first deny decision  - permit_on_first_permit: Stop on first permit decision
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum EvaluationsSemantic {
     #[serde(rename = "execute_all")]
+    #[default]
     ExecuteAll,
     #[serde(rename = "deny_on_first_deny")]
     DenyOnFirstDeny,
     #[serde(rename = "permit_on_first_permit")]
     PermitOnFirstPermit,
-
 }
 
 impl std::fmt::Display for EvaluationsSemantic {
@@ -33,10 +35,3 @@ impl std::fmt::Display for EvaluationsSemantic {
         }
     }
 }
-
-impl Default for EvaluationsSemantic {
-    fn default() -> EvaluationsSemantic {
-        Self::ExecuteAll
-    }
-}
-

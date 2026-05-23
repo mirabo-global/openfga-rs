@@ -17,7 +17,10 @@ pub struct WriteRequest {
     pub writes: Option<Box<models::WriteRequestWrites>>,
     #[serde(rename = "deletes", skip_serializing_if = "Option::is_none")]
     pub deletes: Option<Box<models::WriteRequestDeletes>>,
-    #[serde(rename = "authorization_model_id", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "authorization_model_id",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub authorization_model_id: Option<String>,
 }
 
@@ -30,4 +33,3 @@ impl WriteRequest {
         }
     }
 }
-

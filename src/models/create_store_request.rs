@@ -19,9 +19,6 @@ pub struct CreateStoreRequest {
 
 impl CreateStoreRequest {
     pub fn new(name: String) -> CreateStoreRequest {
-        CreateStoreRequest {
-            name,
-        }
+        CreateStoreRequest { name }
     }
 }
-

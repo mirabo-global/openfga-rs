@@ -20,11 +20,13 @@ pub struct V1TupleToUserset {
 }
 
 impl V1TupleToUserset {
-    pub fn new(tupleset: models::ObjectRelation, computed_userset: models::ObjectRelation) -> V1TupleToUserset {
+    pub fn new(
+        tupleset: models::ObjectRelation,
+        computed_userset: models::ObjectRelation,
+    ) -> V1TupleToUserset {
         V1TupleToUserset {
             tupleset: Box::new(tupleset),
             computed_userset: Box::new(computed_userset),
         }
     }
 }
-

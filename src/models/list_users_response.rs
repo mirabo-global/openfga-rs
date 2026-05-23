@@ -19,9 +19,6 @@ pub struct ListUsersResponse {
 
 impl ListUsersResponse {
     pub fn new(users: Vec<models::User>) -> ListUsersResponse {
-        ListUsersResponse {
-            users,
-        }
+        ListUsersResponse { users }
     }
 }
-

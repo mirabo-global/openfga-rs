@@ -15,7 +15,10 @@ use serde::{Deserialize, Serialize};
 pub struct BatchCheckRequest {
     #[serde(rename = "checks")]
     pub checks: Vec<models::BatchCheckItem>,
-    #[serde(rename = "authorization_model_id", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "authorization_model_id",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub authorization_model_id: Option<String>,
     #[serde(rename = "consistency", skip_serializing_if = "Option::is_none")]
     pub consistency: Option<models::ConsistencyPreference>,
@@ -30,4 +33,3 @@ impl BatchCheckRequest {
         }
     }
 }
-

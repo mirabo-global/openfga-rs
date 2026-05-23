@@ -19,9 +19,6 @@ pub struct ListObjectsResponse {
 
 impl ListObjectsResponse {
     pub fn new(objects: Vec<String>) -> ListObjectsResponse {
-        ListObjectsResponse {
-            objects,
-        }
+        ListObjectsResponse { objects }
     }
 }
-

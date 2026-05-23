@@ -20,16 +20,28 @@ pub struct GetConfigurationResponse {
     #[serde(rename = "access_evaluation_endpoint")]
     pub access_evaluation_endpoint: String,
     /// OPTIONAL. The batch evaluations endpoint URL.
-    #[serde(rename = "access_evaluations_endpoint", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "access_evaluations_endpoint",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub access_evaluations_endpoint: Option<String>,
     /// OPTIONAL. The subject search endpoint URL.
-    #[serde(rename = "search_subject_endpoint", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "search_subject_endpoint",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub search_subject_endpoint: Option<String>,
     /// OPTIONAL. The resource search endpoint URL.
-    #[serde(rename = "search_resource_endpoint", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "search_resource_endpoint",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub search_resource_endpoint: Option<String>,
     /// OPTIONAL. The action search endpoint URL.
-    #[serde(rename = "search_action_endpoint", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "search_action_endpoint",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub search_action_endpoint: Option<String>,
     /// OPTIONAL. Supported capabilities as URN strings.
     #[serde(rename = "capabilities", skip_serializing_if = "Option::is_none")]
@@ -40,7 +52,10 @@ pub struct GetConfigurationResponse {
 }
 
 impl GetConfigurationResponse {
-    pub fn new(policy_decision_point: String, access_evaluation_endpoint: String) -> GetConfigurationResponse {
+    pub fn new(
+        policy_decision_point: String,
+        access_evaluation_endpoint: String,
+    ) -> GetConfigurationResponse {
         GetConfigurationResponse {
             policy_decision_point,
             access_evaluation_endpoint,
@@ -53,4 +68,3 @@ impl GetConfigurationResponse {
         }
     }
 }
-

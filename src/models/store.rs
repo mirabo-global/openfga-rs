@@ -26,7 +26,12 @@ pub struct Store {
 }
 
 impl Store {
-    pub fn new(id: String, name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>) -> Store {
+    pub fn new(
+        id: String,
+        name: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
+    ) -> Store {
         Store {
             id,
             name,
@@ -36,4 +41,3 @@ impl Store {
         }
     }
 }
-

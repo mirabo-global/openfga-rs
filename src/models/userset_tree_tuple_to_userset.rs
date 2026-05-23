@@ -21,10 +21,6 @@ pub struct UsersetTreeTupleToUserset {
 
 impl UsersetTreeTupleToUserset {
     pub fn new(tupleset: String, computed: Vec<models::Computed>) -> UsersetTreeTupleToUserset {
-        UsersetTreeTupleToUserset {
-            tupleset,
-            computed,
-        }
+        UsersetTreeTupleToUserset { tupleset, computed }
     }
 }
-

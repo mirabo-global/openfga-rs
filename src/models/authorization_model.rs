@@ -24,7 +24,11 @@ pub struct AuthorizationModel {
 }
 
 impl AuthorizationModel {
-    pub fn new(id: String, schema_version: String, type_definitions: Vec<models::TypeDefinition>) -> AuthorizationModel {
+    pub fn new(
+        id: String,
+        schema_version: String,
+        type_definitions: Vec<models::TypeDefinition>,
+    ) -> AuthorizationModel {
         AuthorizationModel {
             id,
             schema_version,
@@ -33,4 +37,3 @@ impl AuthorizationModel {
         }
     }
 }
-

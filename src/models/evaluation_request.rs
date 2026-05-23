@@ -24,7 +24,11 @@ pub struct EvaluationRequest {
 }
 
 impl EvaluationRequest {
-    pub fn new(subject: models::Subject, resource: models::Resource, action: models::Action) -> EvaluationRequest {
+    pub fn new(
+        subject: models::Subject,
+        resource: models::Resource,
+        action: models::Action,
+    ) -> EvaluationRequest {
         EvaluationRequest {
             subject: Box::new(subject),
             resource: Box::new(resource),
@@ -33,4 +37,3 @@ impl EvaluationRequest {
         }
     }
 }
-

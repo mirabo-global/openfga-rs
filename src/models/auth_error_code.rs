@@ -11,10 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum AuthErrorCode {
     #[serde(rename = "no_auth_error")]
+    #[default]
     NoAuthError,
     #[serde(rename = "auth_failed_invalid_subject")]
     AuthFailedInvalidSubject,
@@ -32,7 +34,6 @@ pub enum AuthErrorCode {
     Unauthenticated,
     #[serde(rename = "forbidden")]
     Forbidden,
-
 }
 
 impl std::fmt::Display for AuthErrorCode {
@@ -50,10 +51,3 @@ impl std::fmt::Display for AuthErrorCode {
         }
     }
 }
-
-impl Default for AuthErrorCode {
-    fn default() -> AuthErrorCode {
-        Self::NoAuthError
-    }
-}
-

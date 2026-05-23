@@ -26,7 +26,11 @@ pub struct SubjectSearchRequest {
 }
 
 impl SubjectSearchRequest {
-    pub fn new(resource: models::Resource, action: models::Action, subject: models::SubjectFilter) -> SubjectSearchRequest {
+    pub fn new(
+        resource: models::Resource,
+        action: models::Action,
+        subject: models::SubjectFilter,
+    ) -> SubjectSearchRequest {
         SubjectSearchRequest {
             resource: Box::new(resource),
             action: Box::new(action),
@@ -36,4 +40,3 @@ impl SubjectSearchRequest {
         }
     }
 }
-

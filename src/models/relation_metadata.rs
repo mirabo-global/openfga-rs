@@ -13,7 +13,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct RelationMetadata {
-    #[serde(rename = "directly_related_user_types", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "directly_related_user_types",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub directly_related_user_types: Option<Vec<models::RelationReference>>,
     #[serde(rename = "module", skip_serializing_if = "Option::is_none")]
     pub module: Option<String>,
@@ -30,4 +33,3 @@ impl RelationMetadata {
         }
     }
 }
-

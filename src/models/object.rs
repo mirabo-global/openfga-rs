@@ -23,10 +23,6 @@ pub struct Object {
 impl Object {
     /// Object represents an OpenFGA Object.  An Object is composed of a type and identifier (e.g. 'document:1')  See https://openfga.dev/docs/concepts#what-is-an-object
     pub fn new(r#type: String, id: String) -> Object {
-        Object {
-            r#type,
-            id,
-        }
+        Object { r#type, id }
     }
 }
-

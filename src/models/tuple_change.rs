@@ -22,7 +22,11 @@ pub struct TupleChange {
 }
 
 impl TupleChange {
-    pub fn new(tuple_key: models::TupleKey, operation: models::TupleOperation, timestamp: chrono::DateTime<chrono::FixedOffset>) -> TupleChange {
+    pub fn new(
+        tuple_key: models::TupleKey,
+        operation: models::TupleOperation,
+        timestamp: chrono::DateTime<chrono::FixedOffset>,
+    ) -> TupleChange {
         TupleChange {
             tuple_key: Box::new(tuple_key),
             operation,
@@ -30,4 +34,3 @@ impl TupleChange {
         }
     }
 }
-

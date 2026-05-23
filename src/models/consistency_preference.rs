@@ -13,15 +13,17 @@ use serde::{Deserialize, Serialize};
 
 /// ConsistencyPreference : Controls the consistency preferences when calling the query APIs.   - UNSPECIFIED: Default if not set. Behavior will be the same as MINIMIZE_LATENCY.  - MINIMIZE_LATENCY: Minimize latency at the potential expense of lower consistency.  - HIGHER_CONSISTENCY: Prefer higher consistency, at the potential expense of increased latency.
 /// Controls the consistency preferences when calling the query APIs.   - UNSPECIFIED: Default if not set. Behavior will be the same as MINIMIZE_LATENCY.  - MINIMIZE_LATENCY: Minimize latency at the potential expense of lower consistency.  - HIGHER_CONSISTENCY: Prefer higher consistency, at the potential expense of increased latency.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum ConsistencyPreference {
     #[serde(rename = "UNSPECIFIED")]
+    #[default]
     Unspecified,
     #[serde(rename = "MINIMIZE_LATENCY")]
     MinimizeLatency,
     #[serde(rename = "HIGHER_CONSISTENCY")]
     HigherConsistency,
-
 }
 
 impl std::fmt::Display for ConsistencyPreference {
@@ -33,10 +35,3 @@ impl std::fmt::Display for ConsistencyPreference {
         }
     }
 }
-
-impl Default for ConsistencyPreference {
-    fn default() -> ConsistencyPreference {
-        Self::Unspecified
-    }
-}
-

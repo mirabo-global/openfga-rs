@@ -19,9 +19,6 @@ pub struct Any {
 
 impl Any {
     pub fn new() -> Any {
-        Any {
-            at_type: None,
-        }
+        Any { at_type: None }
     }
 }
-

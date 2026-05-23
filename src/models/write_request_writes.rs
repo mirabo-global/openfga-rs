@@ -29,17 +29,13 @@ impl WriteRequestWrites {
     }
 }
 /// On 'error' ( or unspecified ), the API returns an error if an identical tuple already exists. On 'ignore', identical writes are treated as no-ops (matching on user, relation, object, and RelationshipCondition).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum OnDuplicate {
     #[serde(rename = "error")]
+    #[default]
     Error,
     #[serde(rename = "ignore")]
     Ignore,
 }
-
-impl Default for OnDuplicate {
-    fn default() -> OnDuplicate {
-        Self::Error
-    }
-}
-

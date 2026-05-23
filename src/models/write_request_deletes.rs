@@ -29,17 +29,13 @@ impl WriteRequestDeletes {
     }
 }
 /// On 'error', the API returns an error when deleting a tuple that does not exist. On 'ignore', deletes of non-existent tuples are treated as no-ops.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum OnMissing {
     #[serde(rename = "error")]
+    #[default]
     Error,
     #[serde(rename = "ignore")]
     Ignore,
 }
-
-impl Default for OnMissing {
-    fn default() -> OnMissing {
-        Self::Error
-    }
-}
-

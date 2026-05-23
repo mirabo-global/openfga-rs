@@ -11,14 +11,15 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum TupleOperation {
     #[serde(rename = "TUPLE_OPERATION_WRITE")]
+    #[default]
     TupleOperationWrite,
     #[serde(rename = "TUPLE_OPERATION_DELETE")]
     TupleOperationDelete,
-
 }
 
 impl std::fmt::Display for TupleOperation {
@@ -29,10 +30,3 @@ impl std::fmt::Display for TupleOperation {
         }
     }
 }
-
-impl Default for TupleOperation {
-    fn default() -> TupleOperation {
-        Self::TupleOperationWrite
-    }
-}
-

@@ -20,9 +20,6 @@ pub struct BatchCheckResponse {
 
 impl BatchCheckResponse {
     pub fn new() -> BatchCheckResponse {
-        BatchCheckResponse {
-            result: None,
-        }
+        BatchCheckResponse { result: None }
     }
 }
-

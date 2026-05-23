@@ -13,7 +13,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EvaluationsOptions {
-    #[serde(rename = "evaluations_semantic", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "evaluations_semantic",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub evaluations_semantic: Option<models::EvaluationsSemantic>,
 }
 
@@ -24,4 +27,3 @@ impl EvaluationsOptions {
         }
     }
 }
-

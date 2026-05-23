@@ -19,9 +19,6 @@ pub struct EvaluationsResponse {
 
 impl EvaluationsResponse {
     pub fn new() -> EvaluationsResponse {
-        EvaluationsResponse {
-            evaluations: None,
-        }
+        EvaluationsResponse { evaluations: None }
     }
 }
-

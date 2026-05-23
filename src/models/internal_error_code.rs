@@ -11,10 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum InternalErrorCode {
     #[serde(rename = "no_internal_error")]
+    #[default]
     NoInternalError,
     #[serde(rename = "internal_error")]
     InternalError,
@@ -34,7 +36,6 @@ pub enum InternalErrorCode {
     Unavailable,
     #[serde(rename = "data_loss")]
     DataLoss,
-
 }
 
 impl std::fmt::Display for InternalErrorCode {
@@ -53,10 +54,3 @@ impl std::fmt::Display for InternalErrorCode {
         }
     }
 }
-
-impl Default for InternalErrorCode {
-    fn default() -> InternalErrorCode {
-        Self::NoInternalError
-    }
-}
-

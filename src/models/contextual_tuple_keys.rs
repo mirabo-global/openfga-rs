@@ -19,9 +19,6 @@ pub struct ContextualTupleKeys {
 
 impl ContextualTupleKeys {
     pub fn new(tuple_keys: Vec<models::TupleKey>) -> ContextualTupleKeys {
-        ContextualTupleKeys {
-            tuple_keys,
-        }
+        ContextualTupleKeys { tuple_keys }
     }
 }
-

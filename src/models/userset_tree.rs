@@ -21,9 +21,6 @@ pub struct UsersetTree {
 impl UsersetTree {
     /// A UsersetTree contains the result of an Expansion.
     pub fn new() -> UsersetTree {
-        UsersetTree {
-            root: None,
-        }
+        UsersetTree { root: None }
     }
 }
-

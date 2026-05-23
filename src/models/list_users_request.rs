@@ -13,7 +13,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListUsersRequest {
-    #[serde(rename = "authorization_model_id", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "authorization_model_id",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub authorization_model_id: Option<String>,
     #[serde(rename = "object")]
     pub object: Box<models::Object>,
@@ -32,7 +35,11 @@ pub struct ListUsersRequest {
 }
 
 impl ListUsersRequest {
-    pub fn new(object: models::Object, relation: String, user_filters: Vec<models::UserTypeFilter>) -> ListUsersRequest {
+    pub fn new(
+        object: models::Object,
+        relation: String,
+        user_filters: Vec<models::UserTypeFilter>,
+    ) -> ListUsersRequest {
         ListUsersRequest {
             authorization_model_id: None,
             object: Box::new(object),
@@ -44,4 +51,3 @@ impl ListUsersRequest {
         }
     }
 }
-

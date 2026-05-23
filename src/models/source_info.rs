@@ -19,9 +19,6 @@ pub struct SourceInfo {
 
 impl SourceInfo {
     pub fn new() -> SourceInfo {
-        SourceInfo {
-            file: None,
-        }
+        SourceInfo { file: None }
     }
 }
-

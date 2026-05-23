@@ -17,7 +17,10 @@ pub struct CheckRequest {
     pub tuple_key: Box<models::CheckRequestTupleKey>,
     #[serde(rename = "contextual_tuples", skip_serializing_if = "Option::is_none")]
     pub contextual_tuples: Option<Box<models::ContextualTupleKeys>>,
-    #[serde(rename = "authorization_model_id", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "authorization_model_id",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub authorization_model_id: Option<String>,
     /// Defaults to false. Making it true has performance implications.
     #[serde(rename = "trace", skip_serializing_if = "Option::is_none")]
@@ -41,4 +44,3 @@ impl CheckRequest {
         }
     }
 }
-

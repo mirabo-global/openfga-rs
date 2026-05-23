@@ -11,10 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum TypeName {
     #[serde(rename = "TYPE_NAME_UNSPECIFIED")]
+    #[default]
     TypeNameUnspecified,
     #[serde(rename = "TYPE_NAME_ANY")]
     TypeNameAny,
@@ -38,7 +40,6 @@ pub enum TypeName {
     TypeNameList,
     #[serde(rename = "TYPE_NAME_IPADDRESS")]
     TypeNameIpaddress,
-
 }
 
 impl std::fmt::Display for TypeName {
@@ -59,10 +60,3 @@ impl std::fmt::Display for TypeName {
         }
     }
 }
-
-impl Default for TypeName {
-    fn default() -> TypeName {
-        Self::TypeNameUnspecified
-    }
-}
-

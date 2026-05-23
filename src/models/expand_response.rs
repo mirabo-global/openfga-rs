@@ -19,9 +19,6 @@ pub struct ExpandResponse {
 
 impl ExpandResponse {
     pub fn new() -> ExpandResponse {
-        ExpandResponse {
-            tree: None,
-        }
+        ExpandResponse { tree: None }
     }
 }
-

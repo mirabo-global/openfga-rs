@@ -13,7 +13,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ReadAuthorizationModelResponse {
-    #[serde(rename = "authorization_model", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "authorization_model",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub authorization_model: Option<Box<models::AuthorizationModel>>,
 }
 
@@ -24,4 +27,3 @@ impl ReadAuthorizationModelResponse {
         }
     }
 }
-

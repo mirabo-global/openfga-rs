@@ -21,10 +21,6 @@ pub struct ExpandRequestTupleKey {
 
 impl ExpandRequestTupleKey {
     pub fn new(relation: String, object: String) -> ExpandRequestTupleKey {
-        ExpandRequestTupleKey {
-            relation,
-            object,
-        }
+        ExpandRequestTupleKey { relation, object }
     }
 }
-

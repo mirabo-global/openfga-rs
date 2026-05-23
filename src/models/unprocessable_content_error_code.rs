@@ -11,14 +11,15 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum UnprocessableContentErrorCode {
     #[serde(rename = "no_throttled_error_code")]
+    #[default]
     NoThrottledErrorCode,
     #[serde(rename = "throttled_timeout_error")]
     ThrottledTimeoutError,
-
 }
 
 impl std::fmt::Display for UnprocessableContentErrorCode {
@@ -29,10 +30,3 @@ impl std::fmt::Display for UnprocessableContentErrorCode {
         }
     }
 }
-
-impl Default for UnprocessableContentErrorCode {
-    fn default() -> UnprocessableContentErrorCode {
-        Self::NoThrottledErrorCode
-    }
-}
-

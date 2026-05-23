@@ -21,11 +21,12 @@ pub struct ReadAuthorizationModelsResponse {
 }
 
 impl ReadAuthorizationModelsResponse {
-    pub fn new(authorization_models: Vec<models::AuthorizationModel>) -> ReadAuthorizationModelsResponse {
+    pub fn new(
+        authorization_models: Vec<models::AuthorizationModel>,
+    ) -> ReadAuthorizationModelsResponse {
         ReadAuthorizationModelsResponse {
             authorization_models,
             continuation_token: None,
         }
     }
 }
-

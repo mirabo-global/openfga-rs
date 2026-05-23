@@ -11,10 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum NotFoundErrorCode {
     #[serde(rename = "no_not_found_error")]
+    #[default]
     NoNotFoundError,
     #[serde(rename = "undefined_endpoint")]
     UndefinedEndpoint,
@@ -22,7 +24,6 @@ pub enum NotFoundErrorCode {
     StoreIdNotFound,
     #[serde(rename = "unimplemented")]
     Unimplemented,
-
 }
 
 impl std::fmt::Display for NotFoundErrorCode {
@@ -35,10 +36,3 @@ impl std::fmt::Display for NotFoundErrorCode {
         }
     }
 }
-
-impl Default for NotFoundErrorCode {
-    fn default() -> NotFoundErrorCode {
-        Self::NoNotFoundError
-    }
-}
-

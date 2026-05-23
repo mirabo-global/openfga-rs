@@ -26,7 +26,12 @@ pub struct GetStoreResponse {
 }
 
 impl GetStoreResponse {
-    pub fn new(id: String, name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>) -> GetStoreResponse {
+    pub fn new(
+        id: String,
+        name: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
+    ) -> GetStoreResponse {
         GetStoreResponse {
             id,
             name,
@@ -36,4 +41,3 @@ impl GetStoreResponse {
         }
     }
 }
-

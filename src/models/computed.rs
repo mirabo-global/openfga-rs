@@ -19,9 +19,6 @@ pub struct Computed {
 
 impl Computed {
     pub fn new(userset: String) -> Computed {
-        Computed {
-            userset,
-        }
+        Computed { userset }
     }
 }
-

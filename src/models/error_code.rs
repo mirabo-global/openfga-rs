@@ -11,10 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum ErrorCode {
     #[serde(rename = "no_error")]
+    #[default]
     NoError,
     #[serde(rename = "validation_error")]
     ValidationError,
@@ -114,7 +116,6 @@ pub enum ErrorCode {
     Cancelled,
     #[serde(rename = "invalid_start_time")]
     InvalidStartTime,
-
 }
 
 impl std::fmt::Display for ErrorCode {
@@ -123,11 +124,19 @@ impl std::fmt::Display for ErrorCode {
             Self::NoError => write!(f, "no_error"),
             Self::ValidationError => write!(f, "validation_error"),
             Self::AuthorizationModelNotFound => write!(f, "authorization_model_not_found"),
-            Self::AuthorizationModelResolutionTooComplex => write!(f, "authorization_model_resolution_too_complex"),
+            Self::AuthorizationModelResolutionTooComplex => {
+                write!(f, "authorization_model_resolution_too_complex")
+            }
             Self::InvalidWriteInput => write!(f, "invalid_write_input"),
-            Self::CannotAllowDuplicateTuplesInOneRequest => write!(f, "cannot_allow_duplicate_tuples_in_one_request"),
-            Self::CannotAllowDuplicateTypesInOneRequest => write!(f, "cannot_allow_duplicate_types_in_one_request"),
-            Self::CannotAllowMultipleReferencesToOneRelation => write!(f, "cannot_allow_multiple_references_to_one_relation"),
+            Self::CannotAllowDuplicateTuplesInOneRequest => {
+                write!(f, "cannot_allow_duplicate_tuples_in_one_request")
+            }
+            Self::CannotAllowDuplicateTypesInOneRequest => {
+                write!(f, "cannot_allow_duplicate_types_in_one_request")
+            }
+            Self::CannotAllowMultipleReferencesToOneRelation => {
+                write!(f, "cannot_allow_multiple_references_to_one_relation")
+            }
             Self::InvalidContinuationToken => write!(f, "invalid_continuation_token"),
             Self::InvalidTupleSet => write!(f, "invalid_tuple_set"),
             Self::InvalidCheckInput => write!(f, "invalid_check_input"),
@@ -135,8 +144,12 @@ impl std::fmt::Display for ErrorCode {
             Self::UnsupportedUserSet => write!(f, "unsupported_user_set"),
             Self::InvalidObjectFormat => write!(f, "invalid_object_format"),
             Self::WriteFailedDueToInvalidInput => write!(f, "write_failed_due_to_invalid_input"),
-            Self::AuthorizationModelAssertionsNotFound => write!(f, "authorization_model_assertions_not_found"),
-            Self::LatestAuthorizationModelNotFound => write!(f, "latest_authorization_model_not_found"),
+            Self::AuthorizationModelAssertionsNotFound => {
+                write!(f, "authorization_model_assertions_not_found")
+            }
+            Self::LatestAuthorizationModelNotFound => {
+                write!(f, "latest_authorization_model_not_found")
+            }
             Self::TypeNotFound => write!(f, "type_not_found"),
             Self::RelationNotFound => write!(f, "relation_not_found"),
             Self::EmptyRelationDefinition => write!(f, "empty_relation_definition"),
@@ -148,7 +161,9 @@ impl std::fmt::Display for ErrorCode {
             Self::IdTooLong => write!(f, "id_too_long"),
             Self::AuthorizationModelIdTooLong => write!(f, "authorization_model_id_too_long"),
             Self::TupleKeyValueNotSpecified => write!(f, "tuple_key_value_not_specified"),
-            Self::TupleKeysTooManyOrTooFewItems => write!(f, "tuple_keys_too_many_or_too_few_items"),
+            Self::TupleKeysTooManyOrTooFewItems => {
+                write!(f, "tuple_keys_too_many_or_too_few_items")
+            }
             Self::PageSizeInvalid => write!(f, "page_size_invalid"),
             Self::ParamMissingValue => write!(f, "param_missing_value"),
             Self::DifferenceBaseMissingValue => write!(f, "difference_base_missing_value"),
@@ -162,7 +177,9 @@ impl std::fmt::Display for ErrorCode {
             Self::RelationsTooLong => write!(f, "relations_too_long"),
             Self::RelationsInvalidPattern => write!(f, "relations_invalid_pattern"),
             Self::ObjectInvalidPattern => write!(f, "object_invalid_pattern"),
-            Self::QueryStringTypeContinuationTokenMismatch => write!(f, "query_string_type_continuation_token_mismatch"),
+            Self::QueryStringTypeContinuationTokenMismatch => {
+                write!(f, "query_string_type_continuation_token_mismatch")
+            }
             Self::ExceededEntityLimit => write!(f, "exceeded_entity_limit"),
             Self::InvalidContextualTuple => write!(f, "invalid_contextual_tuple"),
             Self::DuplicateContextualTuple => write!(f, "duplicate_contextual_tuple"),
@@ -173,10 +190,3 @@ impl std::fmt::Display for ErrorCode {
         }
     }
 }
-
-impl Default for ErrorCode {
-    fn default() -> ErrorCode {
-        Self::NoError
-    }
-}
-

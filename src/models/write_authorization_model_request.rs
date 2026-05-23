@@ -22,7 +22,10 @@ pub struct WriteAuthorizationModelRequest {
 }
 
 impl WriteAuthorizationModelRequest {
-    pub fn new(type_definitions: Vec<models::TypeDefinition>, schema_version: String) -> WriteAuthorizationModelRequest {
+    pub fn new(
+        type_definitions: Vec<models::TypeDefinition>,
+        schema_version: String,
+    ) -> WriteAuthorizationModelRequest {
         WriteAuthorizationModelRequest {
             type_definitions,
             schema_version,
@@ -30,4 +33,3 @@ impl WriteAuthorizationModelRequest {
         }
     }
 }
-

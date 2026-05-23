@@ -21,9 +21,6 @@ pub struct StreamedListObjectsResponse {
 impl StreamedListObjectsResponse {
     /// The response for a StreamedListObjects RPC.
     pub fn new(object: String) -> StreamedListObjectsResponse {
-        StreamedListObjectsResponse {
-            object,
-        }
+        StreamedListObjectsResponse { object }
     }
 }
-

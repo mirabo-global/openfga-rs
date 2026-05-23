@@ -19,9 +19,6 @@ pub struct Users {
 
 impl Users {
     pub fn new(users: Vec<String>) -> Users {
-        Users {
-            users,
-        }
+        Users { users }
     }
 }
-

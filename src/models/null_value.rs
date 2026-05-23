@@ -13,11 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// NullValue : `NullValue` is a singleton enumeration to represent the null value for the `Value` type union.  The JSON representation for `NullValue` is JSON `null`.   - NULL_VALUE: Null value.
 /// `NullValue` is a singleton enumeration to represent the null value for the `Value` type union.  The JSON representation for `NullValue` is JSON `null`.   - NULL_VALUE: Null value.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(
+    Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize, Default,
+)]
 pub enum NullValue {
     #[serde(rename = "NULL_VALUE")]
+    #[default]
     NullValue,
-
 }
 
 impl std::fmt::Display for NullValue {
@@ -27,10 +29,3 @@ impl std::fmt::Display for NullValue {
         }
     }
 }
-
-impl Default for NullValue {
-    fn default() -> NullValue {
-        Self::NullValue
-    }
-}
-

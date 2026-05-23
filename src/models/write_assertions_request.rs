@@ -19,9 +19,6 @@ pub struct WriteAssertionsRequest {
 
 impl WriteAssertionsRequest {
     pub fn new(assertions: Vec<models::Assertion>) -> WriteAssertionsRequest {
-        WriteAssertionsRequest {
-            assertions,
-        }
+        WriteAssertionsRequest { assertions }
     }
 }
-

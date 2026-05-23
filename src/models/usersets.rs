@@ -19,9 +19,6 @@ pub struct Usersets {
 
 impl Usersets {
     pub fn new(child: Vec<models::Userset>) -> Usersets {
-        Usersets {
-            child,
-        }
+        Usersets { child }
     }
 }
-
