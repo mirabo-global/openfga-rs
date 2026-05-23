@@ -193,11 +193,18 @@ pub async fn list_users(
 /// The Streamed ListObjects API streams results as they are collected rather than waiting to collect all objects before responding.
 /// The server sends newline-delimited JSON (NDJSON); each line is a `StreamResultOfStreamedListObjectsResponse`.
 /// Returns successfully-streamed objects, unwrapping the `result` field of each line.
+///
+/// Lines are processed incrementally as they arrive from the network rather than
+/// buffering the full response body first.
 pub async fn streamed_list_objects(
     configuration: &configuration::Configuration,
     store_id: &str,
     body: models::ListObjectsRequest,
 ) -> Result<Vec<models::StreamedListObjectsResponse>, Error<StreamedListObjectsError>> {
+    use futures_util::TryStreamExt;
+    use tokio::io::AsyncBufReadExt;
+    use tokio_util::io::StreamReader;
+
     let uri_str = format!(
         "{}/stores/{store_id}/streamed-list-objects",
         configuration.base_path,
@@ -211,7 +218,7 @@ pub async fn streamed_list_objects(
     let resp = req_builder.send().await?;
 
     let status = resp.status();
-    if status.is_client_error() || status.is_server_error() {
+    if !status.is_success() {
         let content = resp.text().await?;
         let entity: Option<StreamedListObjectsError> = serde_json::from_str(&content).ok();
         return Err(Error::ResponseError(ResponseContent {
@@ -224,22 +231,29 @@ pub async fn streamed_list_objects(
     // Server streams NDJSON: one JSON object per line.
     // Each line is a StreamResultOfStreamedListObjectsResponse with either a
     // `result` (success) or an `error` (server-side stream failure) field set.
-    let content = resp.text().await?;
+    // Lines are read incrementally from the byte stream without buffering the
+    // entire response body.
+    let byte_stream = resp
+        .bytes_stream()
+        .map_err(std::io::Error::other);
+    let reader = StreamReader::new(byte_stream);
+    let mut lines = reader.lines();
+
     let mut results = Vec::new();
-    for line in content.lines() {
-        let line = line.trim();
-        if line.is_empty() {
+    while let Some(line) = lines.next_line().await? {
+        let trimmed = line.trim().to_owned();
+        if trimmed.is_empty() {
             continue;
         }
         let item: models::StreamResultOfStreamedListObjectsResponse =
-            serde_json::from_str(line).map_err(Error::from)?;
+            serde_json::from_str(&trimmed).map_err(Error::from)?;
         if let Some(err) = item.error {
             // Propagate server-side stream errors — do not silently drop them.
             return Err(Error::ResponseError(ResponseContent {
                 status: reqwest::StatusCode::INTERNAL_SERVER_ERROR,
                 content: format!(
                     "stream error {}: {}",
-                    err.code.unwrap_or_default(),
+                    err.code.map(|c| c.to_string()).unwrap_or_else(|| "unknown".to_string()),
                     err.message.unwrap_or_default()
                 ),
                 entity: None,

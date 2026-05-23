@@ -86,17 +86,17 @@ pub async fn read_changes(
         store_id = crate::apis::urlencode(store_id)
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-    if let Some(ref param_value) = r#type {
-        req_builder = req_builder.query(&[("type", &param_value.to_string())]);
+    if let Some(param_value) = r#type {
+        req_builder = req_builder.query(&[("type", param_value)]);
     }
-    if let Some(ref param_value) = page_size {
-        req_builder = req_builder.query(&[("page_size", &param_value.to_string())]);
+    if let Some(param_value) = page_size {
+        req_builder = req_builder.query(&[("page_size", param_value.to_string())]);
     }
-    if let Some(ref param_value) = continuation_token {
-        req_builder = req_builder.query(&[("continuation_token", &param_value.to_string())]);
+    if let Some(param_value) = continuation_token {
+        req_builder = req_builder.query(&[("continuation_token", param_value)]);
     }
     if let Some(ref param_value) = start_time {
-        req_builder = req_builder.query(&[("start_time", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("start_time", &param_value.to_rfc3339())]);
     }
     let req_builder = configuration.apply_to_request(req_builder);
     let resp = req_builder.send().await?;
@@ -108,7 +108,7 @@ pub async fn write(
     configuration: &configuration::Configuration,
     store_id: &str,
     body: models::WriteRequest,
-) -> Result<serde_json::Value, Error<WriteError>> {
+) -> Result<models::WriteResponse, Error<WriteError>> {
     let uri_str = format!(
         "{}/stores/{store_id}/write",
         configuration.base_path,

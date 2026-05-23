@@ -44,6 +44,7 @@ pub mod models;
 /// [`ConfigurationBuilder`], and [`Error`] into scope.
 pub mod prelude {
     pub use crate::apis::Error;
+    pub use crate::apis::ResponseContent;
     pub use crate::apis::configuration::{
         AuthMethod, BasicAuth, Configuration, ConfigurationBuilder,
     };

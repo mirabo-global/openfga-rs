@@ -216,3 +216,5 @@ pub mod write_request_deletes;
 pub use self::write_request_deletes::WriteRequestDeletes;
 pub mod write_request_writes;
 pub use self::write_request_writes::WriteRequestWrites;
+pub mod write_response;
+pub use self::write_response::WriteResponse;

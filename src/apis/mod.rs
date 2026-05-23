@@ -64,8 +64,18 @@ impl<T> From<std::io::Error> for Error<T> {
     }
 }
 
+/// Percent-encodes a string for use in a URL path segment (RFC 3986).
+///
+/// Unlike `form_urlencoded`, this encodes spaces as `%20` (not `+`) and
+/// is safe for use in path segments where `+` has no special meaning.
 pub fn urlencode<T: AsRef<str>>(s: T) -> String {
-    ::url::form_urlencoded::byte_serialize(s.as_ref().as_bytes()).collect()
+    use percent_encoding::{AsciiSet, CONTROLS, utf8_percent_encode};
+    /// Characters that must be percent-encoded in a URL path segment.
+    const PATH_SEGMENT: &AsciiSet = &CONTROLS
+        .add(b' ').add(b'"').add(b'<').add(b'>').add(b'`')
+        .add(b'#').add(b'?').add(b'{').add(b'}')
+        .add(b'/').add(b'%').add(b'@').add(b':');
+    utf8_percent_encode(s.as_ref(), PATH_SEGMENT).to_string()
 }
 
 pub async fn parse_response<T, E>(resp: reqwest::Response) -> Result<T, Error<E>>
@@ -75,7 +85,7 @@ where
 {
     let status = resp.status();
     let content = resp.text().await?;
-    if !status.is_client_error() && !status.is_server_error() {
+    if status.is_success() {
         serde_json::from_str(&content).map_err(Error::from)
     } else {
         let entity = serde_json::from_str(&content).ok();
@@ -92,7 +102,7 @@ where
     E: serde::de::DeserializeOwned,
 {
     let status = resp.status();
-    if !status.is_client_error() && !status.is_server_error() {
+    if status.is_success() {
         Ok(())
     } else {
         let content = resp.text().await?;

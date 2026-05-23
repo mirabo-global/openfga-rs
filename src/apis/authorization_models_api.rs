@@ -82,11 +82,11 @@ pub async fn read_authorization_models(
         store_id = crate::apis::urlencode(store_id)
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-    if let Some(ref param_value) = page_size {
-        req_builder = req_builder.query(&[("page_size", &param_value.to_string())]);
+    if let Some(param_value) = page_size {
+        req_builder = req_builder.query(&[("page_size", param_value.to_string())]);
     }
-    if let Some(ref param_value) = continuation_token {
-        req_builder = req_builder.query(&[("continuation_token", &param_value.to_string())]);
+    if let Some(param_value) = continuation_token {
+        req_builder = req_builder.query(&[("continuation_token", param_value)]);
     }
     let req_builder = configuration.apply_to_request(req_builder);
     let resp = req_builder.send().await?;
