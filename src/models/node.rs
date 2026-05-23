@@ -16,13 +16,13 @@ pub struct Node {
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "leaf", skip_serializing_if = "Option::is_none")]
-    pub leaf: Option<Box<models::Leaf>>,
+    pub leaf: Option<models::Leaf>,
     #[serde(rename = "difference", skip_serializing_if = "Option::is_none")]
-    pub difference: Option<Box<models::UsersetTreeDifference>>,
+    pub difference: Option<models::UsersetTreeDifference>,
     #[serde(rename = "union", skip_serializing_if = "Option::is_none")]
-    pub union: Option<Box<models::Nodes>>,
+    pub union: Option<models::Nodes>,
     #[serde(rename = "intersection", skip_serializing_if = "Option::is_none")]
-    pub intersection: Option<Box<models::Nodes>>,
+    pub intersection: Option<models::Nodes>,
 }
 
 impl Node {

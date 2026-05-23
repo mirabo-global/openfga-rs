@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Assertion {
     #[serde(rename = "tuple_key")]
-    pub tuple_key: Box<models::AssertionTupleKey>,
+    pub tuple_key: models::AssertionTupleKey,
     #[serde(rename = "expectation")]
     pub expectation: bool,
     #[serde(rename = "contextual_tuples", skip_serializing_if = "Option::is_none")]
@@ -27,7 +27,7 @@ pub struct Assertion {
 impl Assertion {
     pub fn new(tuple_key: models::AssertionTupleKey, expectation: bool) -> Assertion {
         Assertion {
-            tuple_key: Box::new(tuple_key),
+            tuple_key,
             expectation,
             contextual_tuples: None,
             context: None,

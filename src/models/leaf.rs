@@ -15,11 +15,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Leaf {
     #[serde(rename = "users", skip_serializing_if = "Option::is_none")]
-    pub users: Option<Box<models::Users>>,
+    pub users: Option<models::Users>,
     #[serde(rename = "computed", skip_serializing_if = "Option::is_none")]
-    pub computed: Option<Box<models::Computed>>,
+    pub computed: Option<models::Computed>,
     #[serde(rename = "tupleToUserset", skip_serializing_if = "Option::is_none")]
-    pub tuple_to_userset: Option<Box<models::UsersetTreeTupleToUserset>>,
+    pub tuple_to_userset: Option<models::UsersetTreeTupleToUserset>,
 }
 
 impl Leaf {

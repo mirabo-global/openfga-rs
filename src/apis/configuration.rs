@@ -27,12 +27,6 @@ pub struct ApiKey {
     pub key: String,
 }
 
-impl Configuration {
-    pub fn new() -> Configuration {
-        Configuration::default()
-    }
-}
-
 impl Default for Configuration {
     fn default() -> Self {
         Configuration {

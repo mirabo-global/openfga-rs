@@ -19,7 +19,7 @@ pub struct ListUsersRequest {
     )]
     pub authorization_model_id: Option<String>,
     #[serde(rename = "object")]
-    pub object: Box<models::Object>,
+    pub object: models::Object,
     #[serde(rename = "relation")]
     pub relation: String,
     /// The type of results returned. Only accepts exactly one value.
@@ -42,7 +42,7 @@ impl ListUsersRequest {
     ) -> ListUsersRequest {
         ListUsersRequest {
             authorization_model_id: None,
-            object: Box::new(object),
+            object,
             relation,
             user_filters,
             contextual_tuples: None,

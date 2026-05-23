@@ -18,7 +18,7 @@ pub struct TypeDefinition {
     #[serde(rename = "relations", skip_serializing_if = "Option::is_none")]
     pub relations: Option<std::collections::HashMap<String, models::Userset>>,
     #[serde(rename = "metadata", skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<Box<models::Metadata>>,
+    pub metadata: Option<models::Metadata>,
 }
 
 impl TypeDefinition {

@@ -25,7 +25,7 @@ pub struct ListObjectsRequest {
     #[serde(rename = "user")]
     pub user: String,
     #[serde(rename = "contextual_tuples", skip_serializing_if = "Option::is_none")]
-    pub contextual_tuples: Option<Box<models::ContextualTupleKeys>>,
+    pub contextual_tuples: Option<models::ContextualTupleKeys>,
     /// Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,

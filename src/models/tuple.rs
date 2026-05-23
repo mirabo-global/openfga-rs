@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Tuple {
     #[serde(rename = "key")]
-    pub key: Box<models::TupleKey>,
+    pub key: models::TupleKey,
     #[serde(rename = "timestamp")]
     pub timestamp: chrono::DateTime<chrono::FixedOffset>,
 }
@@ -22,7 +22,7 @@ pub struct Tuple {
 impl Tuple {
     pub fn new(key: models::TupleKey, timestamp: chrono::DateTime<chrono::FixedOffset>) -> Tuple {
         Tuple {
-            key: Box::new(key),
+            key,
             timestamp,
         }
     }

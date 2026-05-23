@@ -14,9 +14,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WriteRequest {
     #[serde(rename = "writes", skip_serializing_if = "Option::is_none")]
-    pub writes: Option<Box<models::WriteRequestWrites>>,
+    pub writes: Option<models::WriteRequestWrites>,
     #[serde(rename = "deletes", skip_serializing_if = "Option::is_none")]
-    pub deletes: Option<Box<models::WriteRequestDeletes>>,
+    pub deletes: Option<models::WriteRequestDeletes>,
     #[serde(
         rename = "authorization_model_id",
         skip_serializing_if = "Option::is_none"

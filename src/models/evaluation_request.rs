@@ -14,11 +14,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EvaluationRequest {
     #[serde(rename = "subject")]
-    pub subject: Box<models::Subject>,
+    pub subject: models::Subject,
     #[serde(rename = "resource")]
-    pub resource: Box<models::Resource>,
+    pub resource: models::Resource,
     #[serde(rename = "action")]
-    pub action: Box<models::Action>,
+    pub action: models::Action,
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,
 }
@@ -30,9 +30,9 @@ impl EvaluationRequest {
         action: models::Action,
     ) -> EvaluationRequest {
         EvaluationRequest {
-            subject: Box::new(subject),
-            resource: Box::new(resource),
-            action: Box::new(action),
+            subject,
+            resource,
+            action,
             context: None,
         }
     }

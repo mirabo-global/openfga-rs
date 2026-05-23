@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ExpandResponse {
     #[serde(rename = "tree", skip_serializing_if = "Option::is_none")]
-    pub tree: Option<Box<models::UsersetTree>>,
+    pub tree: Option<models::UsersetTree>,
 }
 
 impl ExpandResponse {

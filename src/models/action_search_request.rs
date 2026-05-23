@@ -14,20 +14,20 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ActionSearchRequest {
     #[serde(rename = "subject")]
-    pub subject: Box<models::Subject>,
+    pub subject: models::Subject,
     #[serde(rename = "resource")]
-    pub resource: Box<models::Resource>,
+    pub resource: models::Resource,
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,
     #[serde(rename = "page", skip_serializing_if = "Option::is_none")]
-    pub page: Option<Box<models::PageRequest>>,
+    pub page: Option<models::PageRequest>,
 }
 
 impl ActionSearchRequest {
     pub fn new(subject: models::Subject, resource: models::Resource) -> ActionSearchRequest {
         ActionSearchRequest {
-            subject: Box::new(subject),
-            resource: Box::new(resource),
+            subject,
+            resource,
             context: None,
             page: None,
         }

@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UsersetTree {
     #[serde(rename = "root", skip_serializing_if = "Option::is_none")]
-    pub root: Option<Box<models::Node>>,
+    pub root: Option<models::Node>,
 }
 
 impl UsersetTree {

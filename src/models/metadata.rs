@@ -18,7 +18,7 @@ pub struct Metadata {
     #[serde(rename = "module", skip_serializing_if = "Option::is_none")]
     pub module: Option<String>,
     #[serde(rename = "source_info", skip_serializing_if = "Option::is_none")]
-    pub source_info: Option<Box<models::SourceInfo>>,
+    pub source_info: Option<models::SourceInfo>,
 }
 
 impl Metadata {

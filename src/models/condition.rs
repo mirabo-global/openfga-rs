@@ -22,7 +22,7 @@ pub struct Condition {
     #[serde(rename = "parameters", skip_serializing_if = "Option::is_none")]
     pub parameters: Option<std::collections::HashMap<String, models::ConditionParamTypeRef>>,
     #[serde(rename = "metadata", skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<Box<models::ConditionMetadata>>,
+    pub metadata: Option<models::ConditionMetadata>,
 }
 
 impl Condition {

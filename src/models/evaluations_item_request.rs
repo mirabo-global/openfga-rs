@@ -14,11 +14,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EvaluationsItemRequest {
     #[serde(rename = "subject", skip_serializing_if = "Option::is_none")]
-    pub subject: Option<Box<models::Subject>>,
+    pub subject: Option<models::Subject>,
     #[serde(rename = "resource", skip_serializing_if = "Option::is_none")]
-    pub resource: Option<Box<models::Resource>>,
+    pub resource: Option<models::Resource>,
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
-    pub action: Option<Box<models::Action>>,
+    pub action: Option<models::Action>,
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,
 }

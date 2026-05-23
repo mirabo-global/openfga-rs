@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ReadRequest {
     #[serde(rename = "tuple_key", skip_serializing_if = "Option::is_none")]
-    pub tuple_key: Option<Box<models::ReadRequestTupleKey>>,
+    pub tuple_key: Option<models::ReadRequestTupleKey>,
     #[serde(rename = "page_size", skip_serializing_if = "Option::is_none")]
     pub page_size: Option<i32>,
     #[serde(rename = "continuation_token", skip_serializing_if = "Option::is_none")]

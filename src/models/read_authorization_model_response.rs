@@ -17,7 +17,7 @@ pub struct ReadAuthorizationModelResponse {
         rename = "authorization_model",
         skip_serializing_if = "Option::is_none"
     )]
-    pub authorization_model: Option<Box<models::AuthorizationModel>>,
+    pub authorization_model: Option<models::AuthorizationModel>,
 }
 
 impl ReadAuthorizationModelResponse {

@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ExpandRequest {
     #[serde(rename = "tuple_key")]
-    pub tuple_key: Box<models::ExpandRequestTupleKey>,
+    pub tuple_key: models::ExpandRequestTupleKey,
     #[serde(
         rename = "authorization_model_id",
         skip_serializing_if = "Option::is_none"
@@ -23,13 +23,13 @@ pub struct ExpandRequest {
     #[serde(rename = "consistency", skip_serializing_if = "Option::is_none")]
     pub consistency: Option<models::ConsistencyPreference>,
     #[serde(rename = "contextual_tuples", skip_serializing_if = "Option::is_none")]
-    pub contextual_tuples: Option<Box<models::ContextualTupleKeys>>,
+    pub contextual_tuples: Option<models::ContextualTupleKeys>,
 }
 
 impl ExpandRequest {
     pub fn new(tuple_key: models::ExpandRequestTupleKey) -> ExpandRequest {
         ExpandRequest {
-            tuple_key: Box::new(tuple_key),
+            tuple_key,
             authorization_model_id: None,
             consistency: None,
             contextual_tuples: None,

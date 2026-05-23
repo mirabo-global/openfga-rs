@@ -14,9 +14,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CheckRequest {
     #[serde(rename = "tuple_key")]
-    pub tuple_key: Box<models::CheckRequestTupleKey>,
+    pub tuple_key: models::CheckRequestTupleKey,
     #[serde(rename = "contextual_tuples", skip_serializing_if = "Option::is_none")]
-    pub contextual_tuples: Option<Box<models::ContextualTupleKeys>>,
+    pub contextual_tuples: Option<models::ContextualTupleKeys>,
     #[serde(
         rename = "authorization_model_id",
         skip_serializing_if = "Option::is_none"
@@ -35,7 +35,7 @@ pub struct CheckRequest {
 impl CheckRequest {
     pub fn new(tuple_key: models::CheckRequestTupleKey) -> CheckRequest {
         CheckRequest {
-            tuple_key: Box::new(tuple_key),
+            tuple_key,
             contextual_tuples: None,
             authorization_model_id: None,
             trace: None,

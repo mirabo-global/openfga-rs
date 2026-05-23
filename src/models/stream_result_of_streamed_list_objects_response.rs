@@ -14,9 +14,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct StreamResultOfStreamedListObjectsResponse {
     #[serde(rename = "result", skip_serializing_if = "Option::is_none")]
-    pub result: Option<Box<models::StreamedListObjectsResponse>>,
+    pub result: Option<models::StreamedListObjectsResponse>,
     #[serde(rename = "error", skip_serializing_if = "Option::is_none")]
-    pub error: Option<Box<models::Status>>,
+    pub error: Option<models::Status>,
 }
 
 impl StreamResultOfStreamedListObjectsResponse {

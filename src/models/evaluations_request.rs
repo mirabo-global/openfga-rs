@@ -14,18 +14,18 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EvaluationsRequest {
     #[serde(rename = "subject", skip_serializing_if = "Option::is_none")]
-    pub subject: Option<Box<models::Subject>>,
+    pub subject: Option<models::Subject>,
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
-    pub action: Option<Box<models::Action>>,
+    pub action: Option<models::Action>,
     #[serde(rename = "resource", skip_serializing_if = "Option::is_none")]
-    pub resource: Option<Box<models::Resource>>,
+    pub resource: Option<models::Resource>,
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,
     /// Optional. If omitted or empty, behaves like a single Access Evaluation request.
     #[serde(rename = "evaluations", skip_serializing_if = "Option::is_none")]
     pub evaluations: Option<Vec<models::EvaluationsItemRequest>>,
     #[serde(rename = "options", skip_serializing_if = "Option::is_none")]
-    pub options: Option<Box<models::EvaluationsOptions>>,
+    pub options: Option<models::EvaluationsOptions>,
 }
 
 impl EvaluationsRequest {

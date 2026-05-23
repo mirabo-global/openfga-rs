@@ -9,21 +9,24 @@
  */
 
 use crate::models;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct V1PeriodTupleToUserset {
     #[serde(rename = "tupleset")]
-    pub tupleset: Box<models::ObjectRelation>,
+    pub tupleset: models::ObjectRelation,
     #[serde(rename = "computedUserset")]
-    pub computed_userset: Box<models::ObjectRelation>,
+    pub computed_userset: models::ObjectRelation,
 }
 
 impl V1PeriodTupleToUserset {
-    pub fn new(tupleset: models::ObjectRelation, computed_userset: models::ObjectRelation) -> V1PeriodTupleToUserset {
+    pub fn new(
+        tupleset: models::ObjectRelation,
+        computed_userset: models::ObjectRelation,
+    ) -> V1PeriodTupleToUserset {
         V1PeriodTupleToUserset {
-            tupleset: Box::new(tupleset),
-            computed_userset: Box::new(computed_userset),
+            tupleset,
+            computed_userset,
         }
     }
 }
-

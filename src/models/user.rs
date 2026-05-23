@@ -15,11 +15,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct User {
     #[serde(rename = "object", skip_serializing_if = "Option::is_none")]
-    pub object: Option<Box<models::Object>>,
+    pub object: Option<models::Object>,
     #[serde(rename = "userset", skip_serializing_if = "Option::is_none")]
-    pub userset: Option<Box<models::UsersetUser>>,
+    pub userset: Option<models::UsersetUser>,
     #[serde(rename = "wildcard", skip_serializing_if = "Option::is_none")]
-    pub wildcard: Option<Box<models::TypedWildcard>>,
+    pub wildcard: Option<models::TypedWildcard>,
 }
 
 impl User {

@@ -16,7 +16,7 @@ pub struct BatchCheckSingleResult {
     #[serde(rename = "allowed", skip_serializing_if = "Option::is_none")]
     pub allowed: Option<bool>,
     #[serde(rename = "error", skip_serializing_if = "Option::is_none")]
-    pub error: Option<Box<models::CheckError>>,
+    pub error: Option<models::CheckError>,
 }
 
 impl BatchCheckSingleResult {

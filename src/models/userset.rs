@@ -17,15 +17,15 @@ pub struct Userset {
     #[serde(rename = "this", skip_serializing_if = "Option::is_none")]
     pub this: Option<serde_json::Value>,
     #[serde(rename = "computedUserset", skip_serializing_if = "Option::is_none")]
-    pub computed_userset: Option<Box<models::ObjectRelation>>,
+    pub computed_userset: Option<models::ObjectRelation>,
     #[serde(rename = "tupleToUserset", skip_serializing_if = "Option::is_none")]
-    pub tuple_to_userset: Option<Box<models::V1TupleToUserset>>,
+    pub tuple_to_userset: Option<models::V1TupleToUserset>,
     #[serde(rename = "union", skip_serializing_if = "Option::is_none")]
-    pub union: Option<Box<models::Usersets>>,
+    pub union: Option<models::Usersets>,
     #[serde(rename = "intersection", skip_serializing_if = "Option::is_none")]
-    pub intersection: Option<Box<models::Usersets>>,
+    pub intersection: Option<models::Usersets>,
     #[serde(rename = "difference", skip_serializing_if = "Option::is_none")]
-    pub difference: Option<Box<models::V1Difference>>,
+    pub difference: Option<models::V1Difference>,
 }
 
 impl Userset {

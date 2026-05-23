@@ -16,7 +16,7 @@ pub struct SubjectSearchResponse {
     #[serde(rename = "results", skip_serializing_if = "Option::is_none")]
     pub results: Option<Vec<models::Subject>>,
     #[serde(rename = "page", skip_serializing_if = "Option::is_none")]
-    pub page: Option<Box<models::PageResponse>>,
+    pub page: Option<models::PageResponse>,
 }
 
 impl SubjectSearchResponse {

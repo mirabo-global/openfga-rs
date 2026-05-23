@@ -14,9 +14,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct V1TupleToUserset {
     #[serde(rename = "tupleset")]
-    pub tupleset: Box<models::ObjectRelation>,
+    pub tupleset: models::ObjectRelation,
     #[serde(rename = "computedUserset")]
-    pub computed_userset: Box<models::ObjectRelation>,
+    pub computed_userset: models::ObjectRelation,
 }
 
 impl V1TupleToUserset {
@@ -25,8 +25,8 @@ impl V1TupleToUserset {
         computed_userset: models::ObjectRelation,
     ) -> V1TupleToUserset {
         V1TupleToUserset {
-            tupleset: Box::new(tupleset),
-            computed_userset: Box::new(computed_userset),
+            tupleset,
+            computed_userset,
         }
     }
 }

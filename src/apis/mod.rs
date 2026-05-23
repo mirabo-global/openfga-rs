@@ -89,7 +89,7 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
         return params;
     }
 
-    unimplemented!("Only objects are supported with style=deepObject")
+    vec![]
 }
 
 /// Internal use only
@@ -110,6 +110,75 @@ impl From<&str> for ContentType {
         } else {
             Self::Unsupported(content_type.to_string())
         }
+    }
+}
+
+pub fn set_user_agent(
+    req_builder: reqwest::RequestBuilder,
+    user_agent: &Option<String>,
+) -> reqwest::RequestBuilder {
+    if let Some(ua) = user_agent {
+        req_builder.header(reqwest::header::USER_AGENT, ua.clone())
+    } else {
+        req_builder
+    }
+}
+
+pub fn apply_auth(
+    req_builder: reqwest::RequestBuilder,
+    config: &configuration::Configuration,
+) -> reqwest::RequestBuilder {
+    if let Some(ref token) = config.bearer_access_token {
+        req_builder.bearer_auth(token)
+    } else if let Some(ref token) = config.oauth_access_token {
+        req_builder.bearer_auth(token)
+    } else if let Some((ref user, ref pass)) = config.basic_auth {
+        req_builder.basic_auth(user, pass.as_deref())
+    } else if let Some(ref api_key) = config.api_key {
+        let key = match &api_key.prefix {
+            Some(prefix) => format!("{} {}", prefix, api_key.key),
+            None => api_key.key.clone(),
+        };
+        req_builder.header(reqwest::header::AUTHORIZATION, key)
+    } else {
+        req_builder
+    }
+}
+
+pub async fn parse_response<T, E>(resp: reqwest::Response) -> Result<T, Error<E>>
+where
+    T: serde::de::DeserializeOwned,
+    E: serde::de::DeserializeOwned,
+{
+    let status = resp.status();
+    let content = resp.text().await?;
+    if !status.is_client_error() && !status.is_server_error() {
+        serde_json::from_str(&content).map_err(Error::from)
+    } else {
+        let entity = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+pub async fn parse_empty_response<E>(resp: reqwest::Response) -> Result<(), Error<E>>
+where
+    E: serde::de::DeserializeOwned,
+{
+    let status = resp.status();
+    if !status.is_client_error() && !status.is_server_error() {
+        Ok(())
+    } else {
+        let content = resp.text().await?;
+        let entity = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }
 

@@ -14,9 +14,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct BatchCheckItem {
     #[serde(rename = "tuple_key")]
-    pub tuple_key: Box<models::CheckRequestTupleKey>,
+    pub tuple_key: models::CheckRequestTupleKey,
     #[serde(rename = "contextual_tuples", skip_serializing_if = "Option::is_none")]
-    pub contextual_tuples: Option<Box<models::ContextualTupleKeys>>,
+    pub contextual_tuples: Option<models::ContextualTupleKeys>,
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,
     /// correlation_id must be a string containing only letters, numbers, or hyphens, with length ≤ 36 characters.
@@ -27,7 +27,7 @@ pub struct BatchCheckItem {
 impl BatchCheckItem {
     pub fn new(tuple_key: models::CheckRequestTupleKey, correlation_id: String) -> BatchCheckItem {
         BatchCheckItem {
-            tuple_key: Box::new(tuple_key),
+            tuple_key,
             contextual_tuples: None,
             context: None,
             correlation_id,
