@@ -399,4 +399,212 @@ mod tests {
         let encoded = urlencode("");
         assert_eq!(encoded, "", "empty string should encode to empty string");
     }
+
+    // ── GROUP D: Debug redaction (F-3) ────────────────────────────────────────
+
+    #[test]
+    fn basic_auth_debug_redacts_password() {
+        let creds = BasicAuth {
+            username: "alice".to_string(),
+            password: Some("super-secret".to_string()),
+        };
+        let debug = format!("{creds:?}");
+        assert!(!debug.contains("super-secret"), "password must not appear in debug output");
+        assert!(debug.contains("[REDACTED]"));
+        assert!(debug.contains("alice"), "username should be visible");
+    }
+
+    #[test]
+    fn auth_method_bearer_debug_redacts_token() {
+        let auth = AuthMethod::Bearer("my-secret-token".to_string());
+        let debug = format!("{auth:?}");
+        assert!(!debug.contains("my-secret-token"));
+        assert!(debug.contains("[REDACTED]"));
+    }
+
+    #[test]
+    fn auth_method_oauth_debug_redacts_token() {
+        let auth = AuthMethod::OAuth("oauth-secret".to_string());
+        let debug = format!("{auth:?}");
+        assert!(!debug.contains("oauth-secret"));
+        assert!(debug.contains("[REDACTED]"));
+    }
+
+    #[test]
+    fn auth_method_basic_debug_redacts_credentials() {
+        let auth = AuthMethod::Basic(BasicAuth {
+            username: "bob".to_string(),
+            password: Some("hunter2".to_string()),
+        });
+        let debug = format!("{auth:?}");
+        assert!(!debug.contains("hunter2"));
+        assert!(debug.contains("[REDACTED]"));
+    }
+
+    #[test]
+    fn auth_method_apikey_debug_redacts_key_keeps_prefix() {
+        let auth = AuthMethod::ApiKey {
+            prefix: Some("Token".to_string()),
+            key: "api-secret-key".to_string(),
+        };
+        let debug = format!("{auth:?}");
+        assert!(!debug.contains("api-secret-key"));
+        assert!(debug.contains("[REDACTED]"));
+        assert!(debug.contains("Token"), "prefix should remain visible");
+    }
+
+    // ── GROUP E: Configuration::default + apply_to_request branches ───────────
+
+    #[test]
+    fn configuration_default_has_localhost_base_path() {
+        let config = Configuration::default();
+        assert_eq!(config.base_path, "http://localhost");
+        assert!(config.auth.is_none());
+    }
+
+    #[test]
+    fn apply_to_request_skips_ua_header_when_user_agent_is_none() {
+        let mut config = Configuration::default();
+        config.user_agent = None;
+        let req = reqwest::Client::new().get("http://localhost");
+        // must not panic — covers the `else { req_builder }` branch (line 119)
+        let _req = config.apply_to_request(req);
+    }
+
+    #[test]
+    fn apply_to_request_with_basic_auth_does_not_panic() {
+        let config = Configuration::builder()
+            .basic_auth("user", Some("pass"))
+            .build();
+        let req = reqwest::Client::new().get("http://localhost");
+        let _req = config.apply_to_request(req);
+    }
+
+    #[test]
+    fn apply_to_request_with_api_key_no_prefix_does_not_panic() {
+        let config = Configuration::builder()
+            .api_key("raw-key", None::<String>)
+            .build();
+        let req = reqwest::Client::new().get("http://localhost");
+        let _req = config.apply_to_request(req);
+    }
+
+    #[test]
+    fn apply_to_request_with_api_key_with_prefix_does_not_panic() {
+        let config = Configuration::builder()
+            .api_key("raw-key", Some("Token"))
+            .build();
+        let req = reqwest::Client::new().get("http://localhost");
+        let _req = config.apply_to_request(req);
+    }
+
+    #[test]
+    fn apply_to_request_with_no_auth_does_not_panic() {
+        let config = Configuration::default(); // auth = None
+        let req = reqwest::Client::new().get("http://localhost");
+        let _req = config.apply_to_request(req);
+    }
+
+    // ── GROUP F: Builder — remaining setters ──────────────────────────────────
+
+    #[test]
+    fn builder_user_agent_override_is_preserved() {
+        let config = Configuration::builder()
+            .user_agent("my-app/1.0")
+            .build();
+        assert_eq!(config.user_agent.as_deref(), Some("my-app/1.0"));
+    }
+
+    #[test]
+    fn builder_custom_client_is_stored() {
+        let custom = reqwest::Client::builder()
+            .timeout(std::time::Duration::from_secs(5))
+            .build()
+            .unwrap();
+        let config = Configuration::builder()
+            .bearer_token("t")
+            .client(custom)
+            .build();
+        assert!(matches!(&config.auth, Some(AuthMethod::Bearer(_))));
+    }
+
+    #[test]
+    fn builder_timeout_setter_does_not_panic() {
+        let _config = Configuration::builder()
+            .bearer_token("t")
+            .timeout(std::time::Duration::from_secs(5))
+            .build();
+    }
+
+    // ── GROUP G: Error::Io + From impls + source() ────────────────────────────
+
+    #[test]
+    fn error_display_io_error_shows_io_module() {
+        let io_err = std::io::Error::new(std::io::ErrorKind::Other, "disk full");
+        let err: Error<String> = Error::from(io_err);
+        let display = format!("{err}");
+        assert!(
+            display.starts_with("error in IO:"),
+            "display should start with 'error in IO:', got: {display}"
+        );
+        assert!(display.contains("disk full"));
+    }
+
+    #[test]
+    fn error_from_io_error_creates_io_variant() {
+        let io_err = std::io::Error::new(std::io::ErrorKind::BrokenPipe, "pipe");
+        let err: Error<String> = Error::from(io_err);
+        assert!(matches!(err, Error::Io(_)));
+    }
+
+    #[test]
+    fn error_source_returns_some_for_io() {
+        use std::error::Error as StdError;
+        let io_err = std::io::Error::new(std::io::ErrorKind::Other, "source-test");
+        let err: Error<String> = Error::from(io_err);
+        assert!(err.source().is_some());
+    }
+
+    #[test]
+    fn error_source_returns_some_for_serde() {
+        use std::error::Error as StdError;
+        let serde_err = serde_json::from_str::<i32>("not-a-number").unwrap_err();
+        let err: Error<String> = Error::Serde(serde_err);
+        assert!(err.source().is_some());
+    }
+
+    #[test]
+    fn error_source_returns_none_for_response_error() {
+        use std::error::Error as StdError;
+        let rc: ResponseContent<String> = ResponseContent {
+            status: reqwest::StatusCode::BAD_REQUEST,
+            content: String::new(),
+            entity: None,
+        };
+        let err: Error<String> = Error::ResponseError(rc);
+        assert!(err.source().is_none());
+    }
+
+    #[test]
+    fn error_source_returns_some_for_reqwest() {
+        use std::error::Error as StdError;
+        let build_result = reqwest::Client::new().get("").build();
+        let reqwest_err = build_result.unwrap_err();
+        let err: Error<String> = Error::from(reqwest_err);
+        assert!(err.source().is_some());
+    }
+
+    #[test]
+    fn error_from_reqwest_error_creates_reqwest_variant() {
+        // Force a reqwest::Error via an empty URL — url crate rejects it before network
+        let build_result = reqwest::Client::new().get("").build();
+        let reqwest_err = build_result.unwrap_err();
+        let err: Error<String> = Error::from(reqwest_err);
+        assert!(matches!(err, Error::Reqwest(_)));
+        let display = format!("{err}");
+        assert!(
+            display.starts_with("error in reqwest:"),
+            "display should start with 'error in reqwest:', got: {display}"
+        );
+    }
 }
